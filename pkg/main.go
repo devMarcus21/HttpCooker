@@ -5,7 +5,7 @@ import (
 	"log"
 	"strings"
 
-	httpclient "github.com/devMarcus21/HttpCooker/pkg/httpclientWrapper"
+	httpclient "github.com/devMarcus21/HttpCooker/pkg/httpClientWrapper"
 	"github.com/devMarcus21/HttpCooker/pkg/invokers"
 	"github.com/devMarcus21/HttpCooker/pkg/orchestrator"
 )
