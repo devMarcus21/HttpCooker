@@ -1,20 +1,19 @@
 package orchestrator
 
 import (
-	"fmt"
-	"os"
-	"text/tabwriter"
+	httpResultslogging "github.com/devMarcus21/HttpCooker/pkg/logging/httpResultsLogging"
 )
 
 type Orchestrator struct {
-	url          string
-	method       string
-	bearerString string
-	groups       int
-	sets         int
-	calls        int
-	invoker      func(func() int, int) map[int]int
-	callback     func() int
+	url           string
+	method        string
+	bearerString  string
+	groups        int
+	sets          int
+	calls         int
+	invoker       func(func() int, int) map[int]int
+	callback      func() int
+	resultsLogger httpResultslogging.HttpResultsLogger
 }
 
 func (orchestrator Orchestrator) GetUrl() string {
@@ -42,17 +41,16 @@ func (orchestrator Orchestrator) GetCalls() int {
 }
 
 func (orchestrator *Orchestrator) Run() {
-	w := tabwriter.NewWriter(os.Stdout, 8, 8, 0, '\t', 0)
-	fmt.Fprintf(w, "%s\t%s\t%s\t%s\t%s\t%s\t\n", "1xx", "2xx", "3xx", "4xx", "5xx", "exception")
+	orchestrator.resultsLogger.LogHeaderMessage()
 
 	for group := 0; group < orchestrator.groups; group++ {
 		for set := 0; set < orchestrator.sets; set++ {
 			results := orchestrator.invoker(orchestrator.callback, orchestrator.calls)
-			printResults(w, results)
+			orchestrator.resultsLogger.LogHttpResults(results)
 		}
-		fmt.Fprintf(w, "\n")
+		orchestrator.resultsLogger.LogPostGroup()
 	}
-	w.Flush()
+	orchestrator.resultsLogger.LoggerCleanUp()
 }
 
 func buildOrchestrator() *Orchestrator {

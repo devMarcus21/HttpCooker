@@ -44,6 +44,7 @@ func main() {
 		SetCalls(*calls).
 		AddHttpClientFunctionCallback(httpClientFactory).
 		SetInvoker(invoker).
+		AddHttpResultsLoggerBasic().
 		Build().
 		Run()
 }

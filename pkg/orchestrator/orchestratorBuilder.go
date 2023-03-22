@@ -1,5 +1,9 @@
 package orchestrator
 
+import (
+	httpResultslogging "github.com/devMarcus21/HttpCooker/pkg/logging/httpResultsLogging"
+)
+
 type OrchestratorBuilder struct {
 	orchestrator *Orchestrator
 }
@@ -46,6 +50,11 @@ func (builder *OrchestratorBuilder) AddHttpClientFunctionCallback(factory func(s
 		builder.orchestrator.bearerString)
 	builder.orchestrator.callback = httpClientFunction
 
+	return builder
+}
+
+func (builder *OrchestratorBuilder) AddHttpResultsLoggerBasic() *OrchestratorBuilder {
+	builder.orchestrator.resultsLogger = httpResultslogging.BuildHttResultsLoggerBasic()
 	return builder
 }
 
