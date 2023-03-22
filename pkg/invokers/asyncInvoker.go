@@ -19,7 +19,6 @@ func InvokerAsync(callback func() int, calls int) map[int]int {
 
 	results := map[int]int{}
 
-	// wg.Wait()
 	for call := 0; call < calls; call++ {
 		result := <-channel
 		results[result] = results[result] + 1
