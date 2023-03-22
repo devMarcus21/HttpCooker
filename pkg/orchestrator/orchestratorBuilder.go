@@ -19,6 +19,11 @@ func (builder *OrchestratorBuilder) SetBearerString(bearer string) *Orchestrator
 	return builder
 }
 
+func (builder *OrchestratorBuilder) SetGroups(groups int) *OrchestratorBuilder {
+	builder.orchestrator.groups = groups
+	return builder
+}
+
 func (builder *OrchestratorBuilder) SetSets(sets int) *OrchestratorBuilder {
 	builder.orchestrator.sets = sets
 	return builder

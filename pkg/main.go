@@ -14,6 +14,7 @@ func main() {
 	url := flag.String("url", "", "")
 	httpMethod := flag.String("method", "GET", "")
 	bearerString := flag.String("bearer", "", "")
+	groups := flag.Int("groups", 1, "")
 	sets := flag.Int("sets", 1, "")
 	calls := flag.Int("calls", 0, "")
 	con := flag.Bool("con", false, "")
@@ -38,6 +39,7 @@ func main() {
 		SetUrl(*url).
 		SetMethod(method).
 		SetBearerString(*bearerString).
+		SetGroups(*groups).
 		SetSets(*sets).
 		SetCalls(*calls).
 		AddHttpClientFunctionCallback(httpClientFactory).
