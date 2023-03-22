@@ -58,6 +58,11 @@ func (builder *OrchestratorBuilder) AddHttpResultsLoggerBasic() *OrchestratorBui
 	return builder
 }
 
+func (builder *OrchestratorBuilder) SetWaitAfterGroup(seconds int) *OrchestratorBuilder {
+	builder.orchestrator.waitAfterGroup = buildWaitAfterGroupFunction(seconds)
+	return builder
+}
+
 func (builder *OrchestratorBuilder) Build() *Orchestrator {
 	return builder.orchestrator
 }

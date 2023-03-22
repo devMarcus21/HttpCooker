@@ -5,15 +5,19 @@ import (
 )
 
 type Orchestrator struct {
-	url           string
-	method        string
-	bearerString  string
-	groups        int
-	sets          int
-	calls         int
-	invoker       func(func() int, int) map[int]int
-	callback      func() int
-	resultsLogger httpResultslogging.HttpResultsLogger
+	url            string
+	method         string
+	bearerString   string
+	groups         int
+	sets           int
+	calls          int
+	invoker        func(func() int, int) map[int]int
+	callback       func() int
+	resultsLogger  httpResultslogging.HttpResultsLogger
+	waitAfterGroup func()
+}
+
+func emptyWaitFunction() {
 }
 
 func (orchestrator Orchestrator) GetUrl() string {
@@ -48,11 +52,17 @@ func (orchestrator *Orchestrator) Run() {
 			results := orchestrator.invoker(orchestrator.callback, orchestrator.calls)
 			orchestrator.resultsLogger.LogHttpResults(results)
 		}
+
 		orchestrator.resultsLogger.LogPostGroup()
+
+		// Don't wait after the last group
+		if group < orchestrator.groups-1 {
+			orchestrator.waitAfterGroup()
+		}
 	}
 	orchestrator.resultsLogger.LoggerCleanUp()
 }
 
 func buildOrchestrator() *Orchestrator {
-	return &Orchestrator{url: "", method: "GET", bearerString: "", groups: 1, sets: 1, calls: 0}
+	return &Orchestrator{url: "", method: "GET", bearerString: "", groups: 1, sets: 1, calls: 0, waitAfterGroup: emptyWaitFunction}
 }

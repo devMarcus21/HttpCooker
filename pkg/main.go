@@ -18,6 +18,7 @@ func main() {
 	sets := flag.Int("sets", 1, "")
 	calls := flag.Int("calls", 0, "")
 	con := flag.Bool("con", false, "")
+	waitAfterGroup := flag.Int("wg", 0, "")
 
 	flag.Parse()
 
@@ -45,6 +46,7 @@ func main() {
 		AddHttpClientFunctionCallback(httpClientFactory).
 		SetInvoker(invoker).
 		AddHttpResultsLoggerBasic().
+		SetWaitAfterGroup(*waitAfterGroup).
 		Build().
 		Run()
 }
