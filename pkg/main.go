@@ -13,7 +13,7 @@ import (
 func main() {
 	url := flag.String("url", "", "Url to make calls to")
 	httpMethod := flag.String("method", "GET", "Http method to make call with")
-	bearerString := flag.String("bearer", "", "Bearer authorization token to make call with")
+	bearerString := flag.String("bearer", "", "Authorization bearer token to make call with")
 	groups := flag.Int("groups", 1, "Number of groups")
 	sets := flag.Int("sets", 1, "Number of sets per group")
 	calls := flag.Int("calls", 0, "Number of HTTP calls to the url per set")
