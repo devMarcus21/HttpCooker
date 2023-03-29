@@ -28,6 +28,11 @@ func main() {
 		log.Fatal("Invalid HTTP method")
 	}
 
+	// Check if url is empty
+	if *url == "" {
+		log.Fatal("Url is empty")
+	}
+
 	// Select invoker function
 	invoker := invokers.InvokeSync
 	if *con {
